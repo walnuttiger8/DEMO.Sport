@@ -1,0 +1,62 @@
+﻿<Window x:Class="Sport.Windows.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sport.Windows"
+        mc:Ignorable="d"
+        Title="Просмотр товара" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <TextBlock Background="Gray" Width="90" Height="90" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Ариткул"/>
+                <TextBox Width="150" x:Name="articleNumber"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Наименование"/>
+                <TextBox Width="150" x:Name="name"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Категория"/>
+                <TextBox Width="150" x:Name="category"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Кол-во на складе"/>
+                <TextBox Width="150" x:Name="quantityInStock"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Единица измерения"/>
+                <TextBox x:Name="unit" Width="150" Text="шт."/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Кол-во в упаковке"/>
+                <TextBox Width="150"  x:Name="countInBox"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Мин. кол-во"/>
+                <TextBox Width="150" x:Name="minCount"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Поставщик"/>
+                <TextBox Width="150"  x:Name="manufacturer"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Размер макс. скидки"/>
+                <TextBox Width="150" x:Name="maxDiscount"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Размер действ. скидки"/>
+                <TextBox Width="150" x:Name="currentDiscount"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Стоимость за ед."/>
+                <TextBox Width="150" x:Name="costPerUnit"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Подробное описание"/>
+                <TextBox Width="150" x:Name="description"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

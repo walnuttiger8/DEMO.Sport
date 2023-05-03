@@ -1,0 +1,83 @@
+﻿<Window x:Class="Sport.Windows.ProductsListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sport.Windows"
+        mc:Ignorable="d"
+        Title="Просмотр товаров" Height="450" Width="820" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20">
+                <TextBlock Text="Название:"/>
+                <TextBox x:Name="searchText" Width="190" FontSize="16" Margin="5 0" TextChanged="searchText_TextChanged"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Размер скидки:" Margin="5 0"/>
+                    <ComboBox Width="110" SelectedIndex="0" x:Name="discountFilter" SelectionChanged="discountFilter_SelectionChanged">
+                        <ComboBoxItem Content="Все диапазоны"/>
+                        <ComboBoxItem Content="0-9.99%"/>
+                        <ComboBoxItem Content="10-14.99%"/>
+                        <ComboBoxItem Content="15% и более"/>
+                    </ComboBox>
+                    <TextBlock Text="Цена:" Margin="10 0"/>
+                    <ComboBox Width="110" x:Name="priceFilter" SelectionChanged="priceFilter_SelectionChanged">
+                        <ComboBoxItem Content="По возрастанию"/>
+                        <ComboBoxItem Content="По убыванию"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+        <ListView x:Name="productsListView" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/> 
+                        <!--image-->
+                        <Grid Grid.Column="1" Margin="5" Width="500">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding ProductName}" FontWeight="Bold"/>
+                            <TextBlock Grid.Row="1" Text="{Binding ProductDescription}"/>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                <TextBlock Text="Производитель:"/>
+                                <TextBlock Text="{Binding ProductManufacturer}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                <TextBlock Text="Цена:"/>
+                                <TextBlock Text="{Binding ProductCost}"/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Margin="10">
+                            <TextBlock Text="{Binding ProductDiscountAmount}"/>
+                            <TextBlock Text="%"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button x:Name="watchButton" Content="Просмотр" Click="watchButton_Click"/>
+            <Button x:Name="addToOrderButton" Content="Добавить к заказу" Click="addToOrderButton_Click"/>
+            <Button Content="Открыть заказ" x:Name="showOrder" Click="showOrder_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

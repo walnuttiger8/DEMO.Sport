@@ -1,0 +1,47 @@
+﻿<Window x:Class="Sport.Windows.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sport.Windows"
+        mc:Ignorable="d"
+        Title="Окно заказа" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="productsListView" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Red">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/>
+                        <!--image-->
+                        <Grid Grid.Column="1" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding ProductName}" FontWeight="Bold"/>
+                            <TextBlock Grid.Row="1" Text="{Binding ProductDescription}"/>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                <TextBlock Text="Производитель:"/>
+                                <TextBlock Text="{Binding ProductManufacturer}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                <TextBlock Text="Цена:"/>
+                                <TextBlock Text="{Binding ProductCost}"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Button Content="X" x:Name="deleteProduct" Click="deleteProduct_Click"/>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
