@@ -78,6 +78,7 @@
             <Button x:Name="watchButton" Content="Просмотр" Click="watchButton_Click"/>
             <Button x:Name="addToOrderButton" Content="Добавить к заказу" Click="addToOrderButton_Click"/>
             <Button Content="Открыть заказ" x:Name="showOrder" Click="showOrder_Click"/>
+            <Button Name="back" Content="Назад" Click="back_Click"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -31,7 +31,7 @@ namespace Sport.Windows
         {
             var productsListWindow = new ProductsListWindow();
             productsListWindow.Show();
-            Close();
+            Hide();
         }
 
         private void signIn_Click(object sender, RoutedEventArgs e)
@@ -48,12 +48,13 @@ namespace Sport.Windows
             {
                 var window = new ManagerWindow();
                 window.Show();
+                Hide();
             } else
             {
                 var window = new ProductsListWindow();
                 window.Show();
+                Hide();
             }
-            Close();
 
         }
     }

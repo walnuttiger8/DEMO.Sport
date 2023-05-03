@@ -23,5 +23,12 @@ namespace Sport.Windows
         {
             InitializeComponent();
         }
+
+        private void showProducts_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ProductsListWindow();
+            window.Show();
+            Close();
+        }
     }
 }

@@ -22,16 +22,24 @@ namespace Sport.Windows
         private readonly TradeEntities _db;
         private readonly Order _order = new Order();
         private readonly int _totalProductsCount;
+        private readonly Window _prevWindow;
 
-        public ProductsListWindow()
+        public ProductsListWindow(Window prevWindow = null)
         {
+            if (prevWindow == null)
+            {
+                _prevWindow = new AuthorizationWindow();
+            } else
+            {
+                _prevWindow = prevWindow;
+            }
             _db = new TradeEntities();
             InitializeComponent();
 
             _totalProductsCount = _db.Product.Count();
 
             LoadProducts();
-        }
+         }
 
         private void LoadProducts()
         {
@@ -114,6 +122,24 @@ namespace Sport.Windows
         private void discountFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadProducts();
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            if (_order != null && _order.Product != null && _order.Product.Any())
+            {
+                var result = MessageBox.Show("Ваш заказ не будет сохранен, продолжить?", "Подтверждение", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _prevWindow.Show();
+                    Close();
+                }
+            } else
+            {
+                _prevWindow.Show();
+                Close();
+            }
+            
         }
     }
 }

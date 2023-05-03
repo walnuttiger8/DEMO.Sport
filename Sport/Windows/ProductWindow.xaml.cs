@@ -35,6 +35,7 @@ namespace Sport.Windows
             if (!Session.IsAdmin())
             {
                 DisableInputs();
+                RemoveInputBorders();
             }   
         }
 
@@ -49,24 +50,40 @@ namespace Sport.Windows
             manufacturer.Text = product.ProductManufacturer;
             maxDiscount.Text = "15";
             currentDiscount.Text = product.ProductDiscountAmount.ToString();
-            costPerUnit.Text = product.ProductCost.ToString();
+            costPerUnit.Text = Math.Round(product.ProductCost, 2).ToString();
             description.Text = product.ProductDescription;
         }
 
         private void DisableInputs()
         {
-            articleNumber.IsEnabled = false;
-            name.IsEnabled = false;
-            category.IsEnabled = false;
-            quantityInStock.IsEnabled = false;
-            countInBox.IsEnabled = false;
-            minCount.IsEnabled = false;
-            manufacturer.IsEnabled = false;
-            maxDiscount.IsEnabled = false;
-            currentDiscount.IsEnabled = false;
-            costPerUnit.IsEnabled = false;
-            description.IsEnabled = false;
-            unit.IsEnabled = false;
+            articleNumber.IsReadOnly = true;
+            name.IsReadOnly = true;
+            category.IsReadOnly = true;
+            quantityInStock.IsReadOnly = true;
+            countInBox.IsReadOnly = true;
+            minCount.IsReadOnly = true;
+            manufacturer.IsReadOnly = true;
+            maxDiscount.IsReadOnly = true;
+            currentDiscount.IsReadOnly = true;
+            costPerUnit.IsReadOnly = true;
+            description.IsReadOnly = true;
+            unit.IsReadOnly = true;
+        }
+
+        private void RemoveInputBorders()
+        {
+            articleNumber.BorderThickness = new Thickness(0);
+            name.BorderThickness = new Thickness(0);
+            category.BorderThickness = new Thickness(0);
+            quantityInStock.BorderThickness = new Thickness(0);
+            countInBox.BorderThickness = new Thickness(0);
+            minCount.BorderThickness = new Thickness(0);
+            manufacturer.BorderThickness = new Thickness(0);
+            maxDiscount.BorderThickness = new Thickness(0);
+            currentDiscount.BorderThickness = new Thickness(0);
+            costPerUnit.BorderThickness = new Thickness(0);
+            description.BorderThickness = new Thickness(0);
+            unit.BorderThickness = new Thickness(0);
         }
     }
 }
