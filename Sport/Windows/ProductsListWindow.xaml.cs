@@ -161,6 +161,12 @@ namespace Sport.Windows
 
         private void addProduct_Click(object sender, RoutedEventArgs e)
         {
+            var window = new ProductWindow();
+            var result = window.ShowDialog();
+            if (result == true)
+            {
+                LoadProducts();
+            }
 
         }
     }

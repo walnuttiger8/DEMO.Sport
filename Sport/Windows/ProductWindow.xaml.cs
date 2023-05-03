@@ -131,6 +131,7 @@ namespace Sport.Windows
             _product.ProductManufacturer = manufacturer.Text;
             _product.ProductCost = decimal.Parse(costPerUnit.Text);
             _product.ProductQuantityInStock = int.Parse(quantityInStock.Text);
+            _product.ProductDiscountAmount = byte.Parse(currentDiscount.Text);
             _product.ProductStatus = "";
 
             try
