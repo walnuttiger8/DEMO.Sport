@@ -3,14 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Sport
 {
-    public static class Session
+    public class Session
     {
-        public static User User { get; set; }
+        private static Session _instance;
 
-        public static bool IsAdmin()
+        public User User { get; set; }
+
+        private Session()
+        {
+        }
+
+
+        public static Session Get()
+        {
+            if (_instance == null)
+            {
+                _instance = new Session();
+            }
+            return _instance;
+        }
+
+        public bool IsAdmin()
         {
             if (User == null)
             {
@@ -19,7 +36,7 @@ namespace Sport
             return User.Role.RoleName == "Администратор";
         }
 
-        public static bool IsManager()
+        public bool IsManager()
         {
             if (User == null)
             {
@@ -28,7 +45,7 @@ namespace Sport
             return User.Role.RoleName == "Менеджер";
         }
 
-        public static bool IsClient()
+        public bool IsClient()
         {
             if (User == null)
             {
@@ -37,7 +54,7 @@ namespace Sport
             return User.Role.RoleName == "Клиент";
         }
 
-        public static void Clear()
+        public void Clear()
         {
             User = null;
         }

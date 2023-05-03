@@ -67,6 +67,15 @@
                 <TextBox MinWidth="20" x:Name="maxDiscount" FontWeight="Light" Text="10"/>
                 <TextBlock Text="%" FontWeight="Light"/>
             </StackPanel>
+            <Grid Margin="0 50 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Name="change" Grid.Column="0" Content="Изменить" Margin="5" Click="change_Click"/>
+                <Button x:Name="save" Grid.Column="0" Content="Сохранить" Margin="5" Click="save_Click"/>
+                <Button Name="delete" Grid.Column="1" Content="Удалить" Margin="5" Click="delete_Click"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

@@ -37,8 +37,18 @@ namespace Sport.Windows
             InitializeComponent();
 
             _totalProductsCount = _db.Product.Count();
+            totalAmount.Text = _totalProductsCount.ToString();
 
             LoadProducts();
+
+            if (Session.Get().IsAdmin())
+            {
+                addProduct.Visibility = Visibility.Visible;
+            } else
+            {
+                addProduct.Visibility = Visibility.Hidden;
+            }
+            showOrder.Visibility = Visibility.Hidden;
          }
 
         private void LoadProducts()
@@ -76,6 +86,7 @@ namespace Sport.Windows
 
 
             productsListView.ItemsSource = products.ToList();
+            currentAmount.Text = products.Count().ToString();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -88,8 +99,12 @@ namespace Sport.Windows
             var selectedProduct = productsListView.SelectedItem as Product;
             if (selectedProduct != null)
             {
-                var window = new ProductWindow(selectedProduct);
-                window.Show();
+                var window = new ProductWindow(selectedProduct.ProductArticleNumber);
+                var result = window.ShowDialog();
+                if (result == true)
+                {
+                    LoadProducts();
+                }
             }
         }
 
@@ -131,15 +146,22 @@ namespace Sport.Windows
                 var result = MessageBox.Show("Ваш заказ не будет сохранен, продолжить?", "Подтверждение", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
+                    Session.Get().Clear();
                     _prevWindow.Show();
                     Close();
                 }
             } else
             {
+                Session.Get().Clear();
                 _prevWindow.Show();
                 Close();
             }
             
+        }
+
+        private void addProduct_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

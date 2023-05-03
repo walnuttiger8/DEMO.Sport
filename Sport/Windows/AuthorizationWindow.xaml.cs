@@ -20,11 +20,11 @@ namespace Sport.Windows
     public partial class AuthorizationWindow : Window
     {
         private readonly TradeEntities _db;
+        private Session _session = Session.Get();
         public AuthorizationWindow()
         {
             InitializeComponent();
             _db = new TradeEntities();
-            Session.Clear();
         }
 
         private void continueAsGuest_Click(object sender, RoutedEventArgs e)
@@ -42,9 +42,9 @@ namespace Sport.Windows
                 MessageBox.Show("Пользователь не найден");
                 return;
             }
-            Session.User = user;
+            _session.User = user;
             
-            if (Session.IsManager() || Session.IsAdmin())
+            if (_session.IsManager() || _session.IsAdmin())
             {
                 var window = new ManagerWindow();
                 window.Show();

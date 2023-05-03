@@ -20,23 +20,59 @@ namespace Sport.Windows
     public partial class ProductWindow : Window
     {
         private Product _product;
+        private readonly TradeEntities _db = new TradeEntities();
+        private Session _session = Session.Get();
 
         public ProductWindow()
         {
             InitializeComponent();
         }
 
-        public ProductWindow(Product product)
+        public ProductWindow(string productSKU)
         {
+            var product = _db.Product.Where(x => x.ProductArticleNumber == productSKU).FirstOrDefault();
+            if (product == null)
+            {
+                MessageBox.Show("Продукт не найден!");
+                DialogResult = false;
+                Close();
+            }
             InitializeComponent();
             _product = product;
 
             fillValuesFromProduct(product);
-            if (!Session.IsAdmin())
+            if (!Session.Get().IsAdmin())
             {
                 DisableInputs();
                 RemoveInputBorders();
-            }   
+            }
+            ShowContextButtons();
+        }
+
+        private void ShowContextButtons()
+        {
+            if (_session.IsAdmin())
+            {
+                if (_product != null) // меняем продукт
+                {
+                    save.Visibility = Visibility.Hidden;
+                    change.Visibility = Visibility.Visible;
+                    delete.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    // создаем продукт
+                    save.Visibility = Visibility.Visible;
+                    change.Visibility = Visibility.Hidden;
+                    delete.Visibility = Visibility.Hidden;
+                }
+            }
+            else
+            {
+                save.Visibility = Visibility.Hidden;
+                change.Visibility = Visibility.Hidden;
+                delete.Visibility = Visibility.Hidden;
+            }
         }
 
         private void fillValuesFromProduct(Product product)
@@ -84,6 +120,90 @@ namespace Sport.Windows
             costPerUnit.BorderThickness = new Thickness(0);
             description.BorderThickness = new Thickness(0);
             unit.BorderThickness = new Thickness(0);
+        }
+
+        private void change_Click(object sender, RoutedEventArgs e)
+        {
+            _product.ProductArticleNumber = articleNumber.Text;
+            _product.ProductName = name.Text;
+            _product.ProductDescription = description.Text;
+            _product.ProductCategory = category.Text;
+            _product.ProductManufacturer = manufacturer.Text;
+            _product.ProductCost = decimal.Parse(costPerUnit.Text);
+            _product.ProductQuantityInStock = int.Parse(quantityInStock.Text);
+            _product.ProductStatus = "";
+
+            try
+            {
+                _db.Entry(_product).State = System.Data.Entity.EntityState.Modified;
+                _db.SaveChanges();
+                DialogResult = true;
+            }
+            catch
+            {
+                foreach (var error in _db.GetValidationErrors())
+                {
+                    foreach (var message in error.ValidationErrors)
+                    {
+                        MessageBox.Show(message.ErrorMessage);
+                    }
+                }
+                return;
+            }
+        }
+
+        private void save_Click(object sender, RoutedEventArgs e)
+        {
+            var product = new Product()
+            {
+                ProductArticleNumber = articleNumber.Text,
+                ProductName = name.Text,
+                ProductDescription = description.Text,
+                ProductCategory = category.Text,
+                ProductPhoto = new byte[] { },
+                ProductManufacturer = manufacturer.Text,
+                ProductCost = decimal.Parse(costPerUnit.Text),
+                ProductQuantityInStock = int.Parse(quantityInStock.Text),
+                ProductStatus = ""
+            };
+            try
+            {
+                _db.Product.Add(product);
+                _db.SaveChanges();
+                DialogResult = true;
+            }
+            catch
+            {
+                foreach (var error in _db.GetValidationErrors())
+                {
+                    foreach (var message in error.ValidationErrors)
+                    {
+                        MessageBox.Show(message.ErrorMessage);
+                    }
+                }
+                return;
+            }
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _db.Product.Remove(_product);
+                _db.SaveChanges();
+                DialogResult = true;
+            }
+            catch
+            {
+                foreach (var error in _db.GetValidationErrors())
+                {
+                    foreach (var message in error.ValidationErrors)
+                    {
+                        MessageBox.Show(message.ErrorMessage);
+                    }
+                }
+
+            }
         }
     }
 }
