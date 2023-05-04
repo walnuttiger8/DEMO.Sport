@@ -20,7 +20,7 @@ namespace Sport.Windows
     public partial class ProductsListWindow : Window
     {
         private readonly TradeEntities _db;
-        private readonly Order _order = new Order();
+        private Order _order = new Order();
         private readonly int _totalProductsCount;
         private readonly Window _prevWindow;
 
@@ -121,7 +121,12 @@ namespace Sport.Windows
         private void showOrder_Click(object sender, RoutedEventArgs e)
         {
             var window = new OrderWindow(_order);
-            window.Show();
+            var result = window.ShowDialog();
+            if (result == true) // order created
+            {
+                _order = new Order(); // create new order
+                showOrder.Visibility = Visibility.Hidden;
+            }
         }
 
         private void searchText_TextChanged(object sender, TextChangedEventArgs e)

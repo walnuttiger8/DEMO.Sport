@@ -7,10 +7,14 @@
         mc:Ignorable="d"
         Title="Окно заказа" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="productsListView" Grid.Row="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="productsListView" Grid.Row="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Background="Red">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="3*"/>
@@ -43,5 +47,27 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <TextBlock Text="Общая сумма заказа: "/>
+                    <TextBlock Text="0" x:Name="totalCost" FontWeight="Bold"/>
+                    <TextBlock Text="Р."/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Text="Пункт выдачи: "/>
+                    <TextBox Text="" MinWidth="150" x:Name="pickUpPoint"/>
+                </StackPanel>
+            </Grid>
+            <Button Content="Сформировать заказ" x:Name="createOrder" Click="createOrder_Click" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </Window>

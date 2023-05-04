@@ -14,7 +14,7 @@
 
         <StackPanel Grid.Row="1" Margin="60 0">
             <Button Name="showProducts" Content="Просмотр товаров" Margin="0 20" Height="40" Click="showProducts_Click"/>
-            <Button Name="showOrders" Content="Просмотр заказов" Margin="0 20" Height="40"/>
+            <Button Name="showOrders" Content="Просмотр заказов" Margin="0 20" Height="40" Click="showOrders_Click"/>
         </StackPanel>
     </Grid>
 </Window>

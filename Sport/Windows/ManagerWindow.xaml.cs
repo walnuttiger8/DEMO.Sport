@@ -26,9 +26,17 @@ namespace Sport.Windows
 
         private void showProducts_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ProductsListWindow();
+            var window = new ProductsListWindow(this);
             window.Show();
-            Close();
+            Hide();
+        }
+
+        private void showOrders_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new OrderListWindow(this);
+            window.Show();
+            Hide();
+
         }
     }
 }
