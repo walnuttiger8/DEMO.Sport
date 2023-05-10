@@ -7,10 +7,14 @@
         mc:Ignorable="d"
         Title="Окно заказа" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="productsListView" Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="productsListView" Grid.Column="0" Margin="5" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Background="Red">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="3*"/>
@@ -43,5 +47,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Grid Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Количество:"/>
+                <TextBox Grid.Column="1" Text="" x:Name="count" IsEnabled="False" TextChanged="count_TextChanged"/>
+            </Grid>
+            <Button Grid.Row="1" Content="Удалить" Margin="5" x:Name="delete" IsEnabled="False"/>
+        </Grid>
     </Grid>
 </Window>

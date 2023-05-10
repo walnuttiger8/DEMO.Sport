@@ -39,5 +39,10 @@ namespace Sport.Windows
             
             _products.Remove(product);
         }
+
+        private void count_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
