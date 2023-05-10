@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Sport.Windows"
         mc:Ignorable="d"
         Title="Окно заказа" Height="450" Width="800">
@@ -11,46 +12,65 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="productsListView" Grid.Column="0" Margin="5" SelectionMode="Single">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/>
-                        <!--image-->
-                        <Grid Grid.Column="1" Margin="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{Binding ProductName}" FontWeight="Bold"/>
-                            <TextBlock Grid.Row="1" Text="{Binding ProductDescription}"/>
-                            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                <TextBlock Text="Производитель:"/>
-                                <TextBlock Text="{Binding ProductManufacturer}"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="3" Orientation="Horizontal">
-                                <TextBlock Text="Цена:"/>
-                                <TextBlock Text="{Binding ProductCost}"/>
-                            </StackPanel>
+        <Grid Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="productsListView" SelectionMode="Single" SelectionChanged="productsListView_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/>
+                            <!--image-->
+                            <Grid Grid.Column="1" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding ProductName}" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Text="{Binding ProductDescription}"/>
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Text="Производитель:"/>
+                                    <TextBlock Text="{Binding ProductManufacturer}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                    <TextBlock Text="Цена:"/>
+                                    <TextBlock Text="{Binding ProductCost}"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="2">
-                            <Button Content="X" x:Name="deleteProduct" Click="deleteProduct_Click"/>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Общая сумма:" FontSize="16" FontWeight="Normal"/>
+                <TextBlock Grid.Column="1" Text="0" FontSize="17" x:Name="totalCost" FontWeight="Medium"/>
+                <TextBlock Grid.Column="2" Text="Скидка:" FontSize="16" FontWeight="Normal"/>
+                <TextBlock Grid.Column="3" Text="0" FontSize="16" FontWeight="Medium" x:Name="totalDiscount"/>
+                <Button Grid.Column="4" Content="Сохранить" x:Name="save" Margin="5" Click="save_Click"/>
+            </Grid>
+        </Grid>
         <Grid Grid.Column="1" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -60,7 +80,32 @@
                 <TextBlock Grid.Column="0" Text="Количество:"/>
                 <TextBox Grid.Column="1" Text="" x:Name="count" IsEnabled="False" TextChanged="count_TextChanged"/>
             </Grid>
-            <Button Grid.Row="1" Content="Удалить" Margin="5" x:Name="delete" IsEnabled="False"/>
+            <Button Grid.Row="1" Content="Удалить" Margin="5" x:Name="delete" IsEnabled="False" Click="delete_Click"/>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Пункт выдачи:" Grid.Row="0"/>
+                <ComboBox Grid.Row="1" x:Name="pickUpPoint">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RawAddress}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Row="3" Margin="0 10 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Статус:" Grid.Row="0"/>
+                <ComboBox x:Name="status" Grid.Row="1" SelectedIndex="0" IsEnabled="False">
+                    <sys:String>Новый</sys:String>
+                    <sys:String>Завершен</sys:String>
+                </ComboBox>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

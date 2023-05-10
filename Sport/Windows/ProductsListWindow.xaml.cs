@@ -20,9 +20,9 @@ namespace Sport.Windows
     public partial class ProductsListWindow : Window
     {
         private readonly TradeEntities _db;
-        private Order _order = new Order();
         private readonly int _totalProductsCount;
         private readonly Window _prevWindow;
+        private List<Product> _productsInOrder;
 
         public ProductsListWindow(Window prevWindow = null)
         {
@@ -49,6 +49,8 @@ namespace Sport.Windows
                 addProduct.Visibility = Visibility.Hidden;
             }
             showOrder.Visibility = Visibility.Hidden;
+
+            _productsInOrder = new List<Product>();
          }
 
         private void LoadProducts()
@@ -113,18 +115,18 @@ namespace Sport.Windows
             var productToAdd = productsListView.SelectedItem as Product;
             if (productToAdd != null)
             {
-                _order.Product.Add(productToAdd);
+                _productsInOrder.Add(productToAdd);
                 showOrder.Visibility = Visibility.Visible;
             }
         }
 
         private void showOrder_Click(object sender, RoutedEventArgs e)
         {
-            var window = new OrderWindow(_order);
+            var window = new OrderWindow(_productsInOrder);
             var result = window.ShowDialog();
             if (result == true) // order created
             {
-                _order = new Order(); // create new order
+                _productsInOrder = new List<Product>();
                 showOrder.Visibility = Visibility.Hidden;
             }
         }
@@ -146,7 +148,7 @@ namespace Sport.Windows
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
-            if (_order != null && _order.Product != null && _order.Product.Any())
+            if (_productsInOrder.Any())
             {
                 var result = MessageBox.Show("Ваш заказ не будет сохранен, продолжить?", "Подтверждение", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)

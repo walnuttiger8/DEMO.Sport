@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,15 @@ namespace Sport.Windows
     {
         private readonly Window _prevWindow;
         private readonly TradeEntities _db = new TradeEntities();
+        private ObservableCollection<Order> _orders;
+
         public OrderListWindow(Window prevWindow)
         {
             _prevWindow = prevWindow;
             InitializeComponent();
+            _orders = new ObservableCollection<Order>(_db.Order.ToList());
 
-            ordersList.ItemsSource = _db.Order.ToList();
+            ordersList.ItemsSource = _orders;
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
@@ -37,10 +41,21 @@ namespace Sport.Windows
 
         private void open_Click(object sender, RoutedEventArgs e)
         {
-            var order = ordersList.SelectedItem;
+            var order = ordersList.SelectedItem as Order;
             if (order == null)
             {
                 return;
+            }
+
+
+            var window = new OrderWindow(order.OrderID);
+            var result = window.ShowDialog();
+            if (result == true)
+            {
+                ordersList.ItemsSource = null;
+                _orders = new ObservableCollection<Order>(_db.Order.ToList());
+
+                ordersList.ItemsSource = _orders;
             }
 
         }

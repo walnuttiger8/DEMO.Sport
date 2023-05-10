@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="TradeModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="TradeModel.FK__User__UserRole__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="TradeModel.OrderProduct" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TradeModel.PickUpPoint" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sport.Windows"
+        xmlns:local="clr-namespace:Sport.Windows" xmlns:converters="clr-namespace:Sport.Converters"
         mc:Ignorable="d"
         Title="Просмотр товаров" Height="560" Width="820" Closed="Window_Closed">
+    <Window.Resources>
+        <converters:ImageConverter x:Key="imageConverter"/>
+        <BitmapImage UriSource="../Resources/picture.png" x:Key="placeholder"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -56,8 +60,9 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/> 
-                        <!--image-->
+                        <!--<TextBlock Grid.Column="0" Margin="5" Background="Gray" Width="65"/>-->
+                        <!--<Image Grid.Column="0" Margin="5" Source="{Binding ProductPhoto, Converter={StaticResource imageConverter}}"/>-->
+                        <Image Grid.Column="0" Margin="5" Source="{StaticResource placeholder}" Width="65"/>
                         <Grid Grid.Column="1" Margin="5" Width="500">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
