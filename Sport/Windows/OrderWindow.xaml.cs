@@ -22,6 +22,7 @@ namespace Sport.Windows
     {
         private Order _order;
         private ObservableCollection<Product> _products;
+        private readonly TradeEntities _db = new TradeEntities();
 
         public OrderWindow(Order order)
         {
@@ -30,6 +31,20 @@ namespace Sport.Windows
             _products = new ObservableCollection<Product>(_order.Product);
 
             productsListView.ItemsSource = _products;
+            DisplayTotalCost();
+        }
+
+        public OrderWindow(int orderId)
+        {
+            _order = _db.Order.Where(x => x.OrderID == orderId).FirstOrDefault();
+            if (_order == null)
+            {
+                MessageBox.Show("Заказ не найден");
+                Close();
+            }
+            InitializeComponent();
+
+            productsListView.ItemsSource = _order.Product;
         }
 
         private void deleteProduct_Click(object sender, RoutedEventArgs e)
@@ -38,6 +53,43 @@ namespace Sport.Windows
             var product = button.DataContext as Product;
             
             _products.Remove(product);
+            DisplayTotalCost();
+        }
+
+        private void DisplayTotalCost()
+        {
+            totalCost.Text = Math.Round(CalculateTotalCost(), 2).ToString();
+        }
+
+        private decimal CalculateTotalCost()
+        {
+            var result = _products.Select(x => x.ProductCost).Sum();
+            return result;
+        }
+
+        private void createOrder_Click(object sender, RoutedEventArgs e)
+        {
+            _order.Product = _products;
+            _order.OrderStatus = "Новый";
+            _order.OrderPickupPoint = pickUpPoint.Text;
+
+            try
+            {
+                _db.Order.Add(_order);
+                _db.SaveChanges();
+                DialogResult = true;
+            } catch
+            {
+                foreach (var i in _db.GetValidationErrors())
+                {
+                    foreach(var m in i.ValidationErrors)
+                    {
+                        MessageBox.Show(m.ErrorMessage);
+                    }
+                }
+                return;
+            }
+
         }
 
         private void count_TextChanged(object sender, TextChangedEventArgs e)
